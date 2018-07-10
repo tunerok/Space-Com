@@ -23,7 +23,7 @@ public class Enemy_scr : MonoBehaviour {
 
     public float weaponDistance = 0.9f;
 
-    void Start() {
+    void Start() {//задаем случайные значения ротации, скорости и т.д.
         if (isBoat) {
             this.transform.Rotate(0, 0, -90, 0);
     }
@@ -32,7 +32,7 @@ public class Enemy_scr : MonoBehaviour {
     }
 
     void Update() {
-    if(this.transform.position.x>10) {
+    if(this.transform.position.x>10) {//если враг улетел, то мы за него ничего не получаем
             Destroy(gameObject);
             Spawner controller = GameObject.FindGameObjectWithTag("GameController").GetComponent("Spawner") as Spawner;
             controller.KilledEnemyNoPoint();
@@ -40,13 +40,13 @@ public class Enemy_scr : MonoBehaviour {
        moveSpeed = speed * Time.deltaTime;
         this.transform.position = new Vector3(transform.position.x + moveSpeed, transform.position.y);
 
-        if (!isBoat)
+        if (!isBoat)//поведение астероидов
         {
             roatSpeed = speedR * Time.deltaTime;
             this.transform.Rotate(0, 0, roatSpeed, 0);
             this.transform.position = new Vector3(transform.position.x + moveSpeed, transform.position.y );
         }
-        else {
+        else {//поведение кораблей врага
         if(reload<0) {
                 ShootLaser();
                 reload = weaponCD;
@@ -61,7 +61,7 @@ public class Enemy_scr : MonoBehaviour {
 
     }
 	
-    void OnTriggerEnter2D(Collider2D theCollision) {
+    void OnTriggerEnter2D(Collider2D theCollision) {//коллайдер соударений лазера и врага
 
     if(theCollision.gameObject.name.Contains("laser(Clone)")) {
 

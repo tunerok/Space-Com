@@ -33,7 +33,7 @@ public class LaserScript : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D theCollision) {
+    void OnTriggerEnter2D(Collider2D theCollision) {//создаем взрыв при соударении и уничтожаем объект
        
         Instantiate(boom, this.transform.position, this.transform.rotation);
         Destroy(this.gameObject);

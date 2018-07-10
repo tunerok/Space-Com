@@ -29,7 +29,7 @@ public class Player : NetworkBehaviour
 
         CmdMovement();
 
-        foreach(KeyCode element in shootBtn) {
+        foreach(KeyCode element in shootBtn) {//реагируем на кнопки выстрела
          if (Input.GetKey(element) && reload <0) {
                 reload = weaponCD;
                 CmdShootLaser();
@@ -76,7 +76,7 @@ public class Player : NetworkBehaviour
 
         if (theCollision.gameObject.name.Contains("laser(Clone)"))
         {
-
+			//чекаем сколько отнимает данная пушка и отнимаем хп
             LaserScript laser = theCollision.gameObject.GetComponent("LaserScript") as LaserScript;
             HP -= laser.damage;
             // hited.transform.position = this.transform.position;
