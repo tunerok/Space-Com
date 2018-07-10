@@ -19,6 +19,8 @@ public class Enemy_scr : MonoBehaviour {
 
     public int enemyHP = 2;
     public Transform explosion;
+	
+	private int enemy_type; //типы врагов. 1 - астероиды, 2 - корабли красные
 
 
     public float weaponDistance = 0.9f;
@@ -33,30 +35,34 @@ public class Enemy_scr : MonoBehaviour {
 
     void Update() {
     if(this.transform.position.x>10) {//если враг улетел, то мы за него ничего не получаем
-            Destroy(gameObject);
+            
             Spawner controller = GameObject.FindGameObjectWithTag("GameController").GetComponent("Spawner") as Spawner;
             controller.KilledEnemyNoPoint();
+			Destroy(gameObject);
         }
        moveSpeed = speed * Time.deltaTime;
         this.transform.position = new Vector3(transform.position.x + moveSpeed, transform.position.y);
 
-        if (!isBoat)//поведение астероидов
-        {
+		switch (type){
+		
+        case 1://поведение астероидов
             roatSpeed = speedR * Time.deltaTime;
             this.transform.Rotate(0, 0, roatSpeed, 0);
             this.transform.position = new Vector3(transform.position.x + moveSpeed, transform.position.y );
-        }
-        else {//поведение кораблей врага
-        if(reload<0) {
+			break;
+        case 2://поведение кораблей врага
+			if(reload<0) {
                 ShootLaser();
                 reload = weaponCD;
-        }
-
+				}
             if (reload >= 0)
                 reload -= Time.deltaTime;
+			break;
 
             this.transform.position = new Vector3(transform.position.x + moveSpeed,  Mathf.Abs(4.5f - speed)*Mathf.Sin(transform.position.x));
-        }
+        default:
+			break;
+		}
         
 
     }
@@ -75,7 +81,7 @@ public class Enemy_scr : MonoBehaviour {
 
         }
     if(enemyHP <= 0) {
-            Destroy(this.gameObject);
+            
             if (explosion)
             {
                 GameObject exploder = ((Transform)Instantiate(explosion, this.transform.position, this.transform.rotation)).gameObject;
@@ -84,6 +90,7 @@ public class Enemy_scr : MonoBehaviour {
 
             Spawner controller = GameObject.FindGameObjectWithTag("GameController").GetComponent("Spawner") as Spawner;
             controller.KilledEnemy();
+			Destroy(this.gameObject);
         }
 
 
