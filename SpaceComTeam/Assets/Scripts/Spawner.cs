@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI; // The namespace for the UI stuff.
 
 public class Spawner : MonoBehaviour
 {
@@ -14,11 +15,17 @@ public class Spawner : MonoBehaviour
     public int enemyUpper = 2;
     public int enemyCount = 2;
     private int currentEnemy = 0;
-
+    public int score_of_game = 0;
+    private Text score_text_data;
 
     // Use this for initialization
     void Start()
     {
+        GameObject scoreGameObject = GameObject.Find("data_score");
+
+        //Get the Text Component attached to that GameObject named Best
+        score_text_data = scoreGameObject.GetComponent<Text>();
+
         StartCoroutine(SpawnEnemy());
     }
 
@@ -28,8 +35,10 @@ public class Spawner : MonoBehaviour
 
     }
 
-    public void KilledEnemy()
+    public void KilledEnemy(int enemy_type)
     {
+        score_of_game = score_of_game + enemy_type*10;
+        score_text_data.text = score_of_game.ToString();
         currentEnemy--;
     }
 

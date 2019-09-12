@@ -27,7 +27,11 @@ public class Enemy_scr : MonoBehaviour {
 
     void Start() {//задаем случайные значения ротации, скорости и т.д.
         if (isBoat) {
+            enemy_type = 2;
             this.transform.Rotate(0, 0, -90, 0);
+    }
+    else{
+        enemy_type = 1;
     }
         speed = Random.Range(0.1f, 2.5f);
         speedR = Random.Range(-20.0f, 20.0f);
@@ -43,7 +47,7 @@ public class Enemy_scr : MonoBehaviour {
        moveSpeed = speed * Time.deltaTime;
         this.transform.position = new Vector3(transform.position.x + moveSpeed, transform.position.y);
 
-		switch (type){
+		switch (enemy_type){
 		
         case 1://поведение астероидов
             roatSpeed = speedR * Time.deltaTime;
@@ -57,9 +61,10 @@ public class Enemy_scr : MonoBehaviour {
 				}
             if (reload >= 0)
                 reload -= Time.deltaTime;
-			break;
+			
 
             this.transform.position = new Vector3(transform.position.x + moveSpeed,  Mathf.Abs(4.5f - speed)*Mathf.Sin(transform.position.x));
+            break;
         default:
 			break;
 		}
@@ -89,7 +94,7 @@ public class Enemy_scr : MonoBehaviour {
             }
 
             Spawner controller = GameObject.FindGameObjectWithTag("GameController").GetComponent("Spawner") as Spawner;
-            controller.KilledEnemy();
+            controller.KilledEnemy(enemy_type);
 			Destroy(this.gameObject);
         }
 

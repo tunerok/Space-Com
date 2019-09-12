@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.Networking;
 
-public class Player : NetworkBehaviour
+public class Player : MonoBehaviour
 {
 
    // public Transform L_weapon;
@@ -41,7 +40,7 @@ public class Player : NetworkBehaviour
 
     }
 
-    [Command]
+   
     void CmdMovement() {
 
         Vector3 mouse = Input.mousePosition; //гет мышь
@@ -57,18 +56,18 @@ public class Player : NetworkBehaviour
             this.transform.position = new Vector3(position.x- 1.5f, position.y);
         }
     }
-    [Command]
+   
     void CmdShootLaser()
     {
         // Высчитываем позицию корабля
         float posX = this.transform.position.x + (Mathf.Cos((transform.localEulerAngles.z - 90) * Mathf.Deg2Rad) * -weaponDistance);
         float posY = this.transform.position.y + (Mathf.Sin((transform.localEulerAngles.z - 90) * Mathf.Deg2Rad) * -weaponDistance);
         // Создаём лазер на этой позиции
-        //var bullet1 = (GameObject)Instantiate(L_weapon, new Vector3(posX, posY-BetweenweaponDistance, 0), this.transform.rotation);
+        var bullet1 = (GameObject)Instantiate(L_weapon, new Vector3(posX, posY-BetweenweaponDistance, 0), this.transform.rotation);
 
         var bullet2 = (GameObject)Instantiate(L_weapon, new Vector3(posX, posY+BetweenweaponDistance, 0), this.transform.rotation);
        // NetworkServer.Spawn(bullet1);
-        NetworkServer.Spawn(bullet2);
+        //NetworkServer.Spawn(bullet2);
     }
 
     void OnTriggerEnter2D(Collider2D theCollision)

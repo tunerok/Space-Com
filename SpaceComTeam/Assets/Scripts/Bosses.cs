@@ -6,7 +6,7 @@ class Bosses{
 	
 	void Genetarion(int lvl)//генерация босса в зависимости от текущего уровня персонажа 
 	{
-		type = random();
+		//type = random();
 		
 	}
 	
